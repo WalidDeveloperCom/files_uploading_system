@@ -1,0 +1,119 @@
+{
+  "info": {
+    "name": "Files Uploading System",
+    "_postman_id": "a1b2c3",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Initiate Payment",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/api/initiate-payment/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "initiate-payment",
+            ""
+          ]
+        }
+      }
+    },
+    {
+      "name": "Payment Success (simulate)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/api/payment/success/?track={{transaction_id}}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "payment",
+            "success",
+            ""
+          ],
+          "query": [
+            {
+              "key": "track",
+              "value": "{{transaction_id}}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Upload File",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:8000/api/upload/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "upload",
+            ""
+          ]
+        }
+      }
+    },
+    {
+      "name": "List Files",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8000/api/files/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "files",
+            ""
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+    {% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h1>Dashboard</h1>
+
+{% if error %}
+<div class="alert alert-danger">{{ error }}</div>
+{% endif %}
+
+{% if has_paid %}
+<div class="mb-4">
+    <h4>Upload a File</h4>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="file" required>
+        <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+</div>
+{% else %}
+<p class="alert alert-warning">Please complete a payment to upload files. Use the API endpoint <code>/api/initiate-payment/</code> to get the payment URL.</p>
+{% endif %}
+
+<h4>Your Uploaded Files</h4>
+<table class="table table-bordered">
+    <thead>
+        <tr><th>Filename</th><th>Uploaded At</th><th>Status</th><th>Word Count</th></tr>
+    </thead>
+    <tbody>
+        {% for file in files %}
+        <tr>
+            <td>{{ file.filename }}</td>
+            <td>{{ file.upload_time }}</td>
+            <td>{{ file.status }}</td>
+            <td>{{ file.word_count }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">No files uploaded yet.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h4>Your Activities</h4>
+<table class="table table-bordered">
+    <thead><tr><th>Action</th><th>Metadata</th><th>Timestamp</th></tr></thead>
+    <tbody>
+        {% for activity in activities %}
+        <tr><td>{{ activity.action }}</td><td>{{ activity.metadata }}</td><td>{{ activity.timestamp }}</td></tr>
+        {% empty %}
+        <tr><td colspan="3">No activity recorded.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h4>Payment History</h4>
+<table class="table table-bordered">
+    <thead><tr><th>Transaction ID</th><th>Amount</th><th>Status</th><th>Timestamp</th></tr></thead>
+    <tbody>
+        {% for t in transactions %}
+        <tr><td>{{ t.transaction_id }}</td><td>{{ t.amount }}</td><td>{{ t.status }}</td><td>{{ t.timestamp }}</td></tr>
+        {% empty %}
+        <tr><td colspan="4">No payments yet.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
